@@ -2,23 +2,22 @@ package com.astr.travelapp.controller;
 
 import com.astr.travelapp.entity.*;
 import com.astr.travelapp.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/user")
-public class UserController {
+public class OrderController {
     private CityService cityService;
     private CarService carService;
     private DistanceService distanceService;
     private DriverService driverService;
     private OrderService orderService;
 
-    @Autowired
-    public UserController(CityService cityService, CarService carService, DistanceService distanceService, DriverService driverService, OrderService orderService) {
+    public OrderController(CityService cityService, CarService carService, DistanceService distanceService, DriverService driverService, OrderService orderService) {
         this.cityService = cityService;
         this.carService = carService;
         this.distanceService = distanceService;
@@ -26,41 +25,7 @@ public class UserController {
         this.orderService = orderService;
     }
 
-    @GetMapping("/home")
-    public String showHome(Model model, @ModelAttribute("distance") Distance distance){
-        model.addAttribute("cityList", cityService.findAll());
-        return "user/user";
-    }
-
-    @PostMapping("selectDistance")
-    public String selectDistance(@ModelAttribute("distance") Distance distance, @ModelAttribute("totalPerson") int totalPerson, Model model){
-        if(distance.getSource() == distance.getDestination()){
-            return "user/source-destination-error";
-        }
-        try{
-            Distance newDistance = distanceService.findBySourceAndDestination(distance.getSource(), distance.getDestination());
-            return "redirect:/user/selectCar?distanceId="+newDistance.getId()+"&totalPerson="+totalPerson;
-        }
-        catch (RuntimeException e){
-            return "redirect:/user/showErrorPage";
-        }
-
-    }
-//    This error page is for when distance is not set for particular source and destination in distance matrix
-    @GetMapping("showErrorPage")
-    public String showErrorPage(){
-        return "user/source-distance-notfound";
-    }
-
-    @GetMapping("selectCar")
-    public String showCar(@RequestParam("distanceId") int distance, Model model, @RequestParam("totalPerson") int totalPerson){
-        model.addAttribute("totalPerson", totalPerson);
-        model.addAttribute("distanceId", distance);
-        model.addAttribute("carList", carService.findAll());
-        return "user/car-select";
-    }
-
-    @GetMapping("displayOrder")
+    @GetMapping("/user/displayOrder")
     public String displayOrder(@RequestParam("distanceId") int distanceId, @RequestParam("carId") int carId, Model model){
         Distance distance = distanceService.findById(distanceId);
         Car car = carService.findById(carId);
@@ -75,14 +40,12 @@ public class UserController {
         return "user/display-order";
     }
 
-    @GetMapping("createOrder")
+    @GetMapping("/user/createOrder")
     public String createOrder(@RequestParam("distanceId") int distanceId, @RequestParam("carId") int carId, Authentication authentication){
         Distance distance = distanceService.findById(distanceId);
         Car car = carService.findById(carId);
         car.setStatus("B");
         carService.save(car);
-        City source = cityService.findById(distance.getSource());
-        City destination = cityService.findById(distance.getDestination());
         Driver driver = driverService.findById(car.getDriverId());
         Order order = new Order();
         order.setUserId(authentication.getName());
@@ -95,7 +58,7 @@ public class UserController {
         return "redirect:/user/orderList";
     }
 
-    @GetMapping("/orderList")
+    @GetMapping("/user/orderList")
     public String orderList(Model model, Authentication authentication){
         model.addAttribute("userName", authentication.getName());
         model.addAttribute("orderList", orderService.findAll());
@@ -105,27 +68,14 @@ public class UserController {
         model.addAttribute("distanceList", distanceService.findAll());
         return "user/order-list";
     }
+
+    @GetMapping("/admin/listBooking")
+    public String listBooking(Model model){
+        model.addAttribute("orderList", orderService.findAll());
+        model.addAttribute("cityList", cityService.findAll());
+        model.addAttribute("driverList", driverService.findAll());
+        model.addAttribute("carList", carService.findAll());
+        model.addAttribute("distanceList", distanceService.findAll());
+        return  "admin/order-list";
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
