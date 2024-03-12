@@ -1,6 +1,7 @@
 package com.astr.travelapp.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Table(name = "orders")
@@ -21,9 +22,10 @@ public class Order {
     private int distanceId;
     @Column(name = "completed")
     private String completed;
-
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "order_datetime")
-    private String orderDateTime;
+    private String dateTime;
 
     public Order() {
     }
@@ -37,12 +39,12 @@ public class Order {
         this.completed = completed;
     }
 
-    public String getOrderDateTime() {
-        return orderDateTime;
+    public String getDateTime() {
+        return dateTime;
     }
 
-    public void setOrderDateTime(String orderDateTime) {
-        this.orderDateTime = orderDateTime;
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public int getId() {

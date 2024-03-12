@@ -19,6 +19,7 @@
             <th>Car Number</th>
             <th>Completed</th>
             <th>Fare</th>
+            <th>Date and Time</th>
         </tr>
         </thead>
         <tbody>
@@ -28,6 +29,7 @@
             <td th:each="car:${carList}" th:if="${order.carId == car.id}" th:text="${car.number}"></td>
             <td th:text="${order.completed}"></td>
             <td ><span th:text="${order.fare}"></span> Rs/-</td>
+            <td th:text="${order.dateTime}"></td>
         </tr>
         </tbody>
     </table>
