@@ -27,10 +27,14 @@ public class DistanceDAOImpl implements DistanceDAO{
     }
 
     @Override
-    public Distance findBySourceAndDestination(int source, int destination) {
+    public Distance findBySourceAndDestination(int source, int destination) throws RuntimeException {
         TypedQuery<Distance> typedQuery = entityManager.createQuery("FROM Distance WHERE source=:source AND destination=:destination", Distance.class);
         typedQuery.setParameter("source", source);
         typedQuery.setParameter("destination", destination);
-        return typedQuery.getSingleResult();
+        Distance distance = typedQuery.getSingleResult();
+        if (distance == null){
+            throw new RuntimeException("source and destination does not exits");
+        }
+        return distance;
     }
 }

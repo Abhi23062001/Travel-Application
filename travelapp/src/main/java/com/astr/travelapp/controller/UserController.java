@@ -33,12 +33,23 @@ public class UserController {
     }
 
     @PostMapping("selectDistance")
-    public String selectCar(@ModelAttribute("distance") Distance distance, @ModelAttribute("totalPerson") int totalPerson, Model model){
+    public String selectDistance(@ModelAttribute("distance") Distance distance, @ModelAttribute("totalPerson") int totalPerson, Model model){
         if(distance.getSource() == distance.getDestination()){
             return "user/source-destination-error";
         }
-        Distance newDistance = distanceService.findBySourceAndDestination(distance.getSource(), distance.getDestination());
-        return "redirect:/user/selectCar?distanceId="+newDistance.getId()+"&totalPerson="+totalPerson;
+        try{
+            Distance newDistance = distanceService.findBySourceAndDestination(distance.getSource(), distance.getDestination());
+            return "redirect:/user/selectCar?distanceId="+newDistance.getId()+"&totalPerson="+totalPerson;
+        }
+        catch (RuntimeException e){
+            return "redirect:/user/showErrorPage";
+        }
+
+    }
+//    This error page is for when distance is not set for particular source and destination in distance matrix
+    @GetMapping("showErrorPage")
+    public String showErrorPage(){
+        return "user/source-distance-notfound";
     }
 
     @GetMapping("selectCar")

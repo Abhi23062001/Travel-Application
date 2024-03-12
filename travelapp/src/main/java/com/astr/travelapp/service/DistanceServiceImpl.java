@@ -25,7 +25,7 @@ public class DistanceServiceImpl implements DistanceService{
     }
 
     @Override
-    public Distance findBySourceAndDestination(int source, int destination) {
+    public Distance findBySourceAndDestination(int source, int destination) throws RuntimeException {
         return distanceDAO.findBySourceAndDestination(source, destination);
     }
 }
