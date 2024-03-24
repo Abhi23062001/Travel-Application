@@ -1,4 +1,4 @@
-# Travel-Application
+# Project Title: Travel Application
 
 # Technology Stack
   •	Spring
