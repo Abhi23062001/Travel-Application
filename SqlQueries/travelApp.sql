@@ -3,14 +3,14 @@ CREATE DATABASE travel_app;
 USE travel_app;
 
 CREATE TABLE `cities`(
-    `city_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `city_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `city_name` VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE `distance_matrix`(
-    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    `source_city_id` INT UNSIGNED NOT NULL,
-    `destination_city_id` INT UNSIGNED NOT NULL,
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `source_city_id` INT NOT NULL,
+    `destination_city_id` INT NOT NULL,
     `distance` INT NOT NULL,
     FOREIGN KEY (`source_city_id`) REFERENCES `cities`(`city_id`),
     FOREIGN KEY (`destination_city_id`) REFERENCES `cities`(`city_id`)
@@ -146,7 +146,7 @@ INSERT INTO `distance_matrix` (`source_city_id`, `destination_city_id`, `distanc
 (13, 8, 150);
 
 CREATE TABLE `car`(
-    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `model` VARCHAR(255) NOT NULL,
     `number` VARCHAR(255) NOT NULL,
@@ -157,7 +157,7 @@ CREATE TABLE `car`(
 );
 
 CREATE TABLE `driver`(
-    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255) NOT NULL,
     `age` INT NOT NULL,
     `phone` VARCHAR(255) NOT NULL,
@@ -218,12 +218,12 @@ INSERT INTO authorities VALUES('user1', 'ROLE_USER'),
 	('admin', 'ROLE_ADMIN');
 
 CREATE TABLE orders(
-    `id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    `id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `user_id` VARCHAR(255) NOT NULL,
-	`car_id` INT UNSIGNED NOT NULL,	
-    `driver_id` INT UNSIGNED NOT NULL,
+	`car_id` INT NOT NULL,
+    `driver_id` INT NOT NULL,
     `fare` INT NOT NULL,
-    `distance_id` INT UNSIGNED NOT NULL
+    `distance_id` INT NOT NULL
 );
 
 ALTER TABLE

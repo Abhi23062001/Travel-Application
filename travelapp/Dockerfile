@@ -11,7 +11,7 @@ COPY . /travelapp
 USER root
 
 RUN chmod +x mvnw && \
-    mvnw clean install && \
+    ./mvnw clean install && \
     chmod +x target/travelapp-0.0.1-SNAPSHOT.jar
 
 CMD ["java", "-jar", "/travelapp/target/travelapp-0.0.1-SNAPSHOT.jar"]
