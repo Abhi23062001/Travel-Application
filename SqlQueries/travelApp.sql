@@ -1,3 +1,7 @@
+CREATE DATABASE travel_app;
+
+USE travel_app;
+
 CREATE TABLE `cities`(
     `city_id` INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
     `city_name` VARCHAR(255) NOT NULL
