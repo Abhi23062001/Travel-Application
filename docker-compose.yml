@@ -30,8 +30,8 @@ services:
       MYSQL_ROOT_PASSWORD: 1234
 
 networks:
-  - travel-application:
+  travel-application:
 
 volumes:
-  - travelapp:
-  - traveldb:
+  travelapp:
+  traveldb:
