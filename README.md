@@ -1,13 +1,13 @@
 # Travel-Application
 
 # Technology Stack
-  Spring \n
-  Spring Boot \n
-  JUnit \n
-  Thymeleaf \n
-  Hibernate ORM \n
-  MySQL \n
-  Embedded Tomcat Server
+  •	Spring
+  •	Spring Boot
+  •	JUnit
+  •	Thymeleaf
+  •	Hibernate ORM
+  •	MySQL
+  •	Embedded Tomcat Server
   
 # Implemented Features
 # User Authentication
